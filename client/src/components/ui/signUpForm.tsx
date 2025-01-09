@@ -7,20 +7,21 @@ import {
     TextInput,
     Title,
   } from '@mantine/core';
-import classes from "../app/Welcome/AuthenticationTitle.module.css"
+import classes from "../../app/Welcome/AuthenticationTitle.module.css"
 import { Link } from 'react-router-dom';
 import { useForm } from '@mantine/form';
-import { signUp } from '../app/methods/methods';
+import { signUp } from '../../app/methods/methods';
 
 function SignUpForm() {
 
     const form = useForm({
         initialValues: {
             username:"",
-            password:""
+            password:"",
         }
     })
     return (
+         //sign up function handles logic regarding sign ups
         <form onSubmit={form.onSubmit(signUp)}>
             <Container size={420} my={40}>
             <Title ta="center" className={classes.title}>
@@ -32,7 +33,7 @@ function SignUpForm() {
                 <PasswordInput label="Password" placeholder="Your password" required mt="md" {...form.getInputProps("password")}/>
 
                 <Button fullWidth mt="xl" type = 'submit'>
-                    Sign up
+                    Sign Up
                 </Button>
             </Paper>
             </Container>

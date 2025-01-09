@@ -5,7 +5,7 @@ import {
   } from '@mantine/core';
 import classes from "./AuthenticationTitle.module.css";
 import { Link } from 'react-router-dom';
-import LoginForm from '../../components/loginForm';
+import LoginForm from '../../components/ui/loginForm';
 
   export function Welcomepage() {
     return (

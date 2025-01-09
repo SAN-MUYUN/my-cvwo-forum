@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,14 @@ type Tag struct {
 type User struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+}
+
+type Post struct {
+	Username  string    `json:"username"`
+	Title     string    `json:"title"`
+	Body      string    `json:"body"`
+	Tag       string    `json:"tag"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
 func main() {
@@ -83,6 +92,28 @@ func main() {
 		defer result.Close()
 		fmt.Println("new user data inserted")
 		return c.JSON(result)
+	})
+
+	app.Get("/api/home", func(c *fiber.Ctx) error {
+		var posts []Post
+
+		results, err := db.Query("SELECT title, username, body, tag, created_at FROM posts")
+		if err != nil {
+			fmt.Println("failed to fetch posts from database")
+		}
+		defer results.Close()
+
+		fmt.Println("data retrieved")
+
+		for results.Next() {
+			var post Post
+			err := results.Scan(&post.Title, &post.Username, &post.Body, &post.Tag, &post.CreatedAt)
+			if err != nil {
+				fmt.Println("error parsing data")
+			}
+			posts = append(posts, post)
+		}
+		return c.JSON(posts)
 	})
 
 	// results, err := db.Query("SELECT * FROM tags")
