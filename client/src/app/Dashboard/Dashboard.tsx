@@ -1,19 +1,21 @@
-import { Text } from "@mantine/core"
+import { TagsInput, Text } from "@mantine/core"
 import { ENDPOINT } from "../methods/methods";
 import { Post } from "../../types";
 import useSWR from "swr";
 import Layout from "./layout";
 import "./dashboard.css"
+import { FetchPost } from "../../components/FetchPost";
+import { createContext, useState } from "react";
 
+export const TagsContext = createContext<string[] | undefined>([])
+export const PostContext = createContext<Post[] | undefined>([])
 
 function Dashboard() {
     const username = sessionStorage.getItem("user");
     console.log(username)
+    
+    const[tags, setTags] = useState<string[]>([]);
 
-    const fetcher = (url: string) => fetch(`${ENDPOINT}/${url}`).then((r) => r.json());
-    const {data} = useSWR<Post[]>('api/home', fetcher)
-
-    console.log(data)
 
     if(username == null) {
         return (
@@ -22,7 +24,21 @@ function Dashboard() {
     } else {
         return (
             <Layout>
-                <Text>welcome</Text>
+                
+                <TagsInput
+                    label="Press Enter to submit a tag"
+                    placeholder="Enter tag to filter posts"
+                    allowDuplicates = {false}
+                    clearable
+                    onChange={(tags) => setTags(tags)}
+                    className="dashboard-content"
+                />
+                <br></br>
+                  
+                
+                <TagsContext.Provider value={tags}>
+                    <FetchPost/>
+                </TagsContext.Provider>
             </Layout>
             
         )

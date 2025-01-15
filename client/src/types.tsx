@@ -1,7 +1,8 @@
 export type Post = {
+    id: Number
     username: string
     title: string
     body: string
-    tag: string[]
-    createdAt: Date
+    tags: string[]
+    createdAt: Number
 }

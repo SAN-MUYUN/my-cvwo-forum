@@ -38,6 +38,7 @@ function CreatePostTab() {
                             label="Press Enter to submit a tag"
                             placeholder="Enter tag"
                             defaultValue={['React']}
+                            allowDuplicates = {false}
                             clearable
                             {...form.getInputProps("tags")}
                         />

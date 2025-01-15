@@ -6,12 +6,17 @@ import Dashboard from './Dashboard/Dashboard'
 import SignUpPage from './SignUp/SignUp'
 
 function App() {
+  const links = [
+    {path: '/', element: <Welcomepage/>},
+    {path: '/dashboard', element: <Dashboard/>},
+    {path:'/signup', element: <SignUpPage/>}
+  ]
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Welcomepage />}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
-        <Route path='/signUp' element = {<SignUpPage/>}/>
+      {links.map((link) => (
+          <Route key={link.path} path={link.path} element={link.element} />
+        ))}
       </Routes>
     </Router>
   )
