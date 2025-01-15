@@ -1,3 +1,6 @@
+import useSWR from "swr";
+import { Post } from "../../types";
+
 export const ENDPOINT = "http://localhost:8000";
 export const fetcher = (url: string) => fetch(`${ENDPOINT}/${url}`).then((r) => r.json());
 
@@ -79,3 +82,28 @@ export function displayTime(time: number) {
     return new Date(time).toLocaleDateString() +" " +new Date(time).toLocaleTimeString();
 }
 
+export async function loadMyPost() {
+    const user = sessionStorage.getItem('user');
+    const {data, mutate} = useSWR<Post[]>('/api/dashboard/mypost', fetcher)
+
+
+    if (user == null) {
+        return
+    }
+    try {
+        console.log(data)
+        const updated = await fetch(`${ENDPOINT}/api/dashboard/mypost`, {
+            method:"POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }).then((r) => r.json());
+
+        mutate(updated);
+
+    } catch(error) {
+        console.log(error);
+    }
+    
+}

@@ -1,4 +1,4 @@
-import { HiOutlineUser, HiPencil, HiPlus, HiZoomIn } from "react-icons/hi";
+import { HiOutlineUser, HiPencil, HiPlus, HiUser, HiZoomIn } from "react-icons/hi";
 
 
 import {
@@ -13,7 +13,7 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import classes from './SideNav.module.css';
-import { Link } from "react-router-dom";
+import { Link, Links } from "react-router-dom";
 import CreatePostTab from "../ui/createPostTab";
 
 const username = sessionStorage.getItem("user")
@@ -76,16 +76,14 @@ export function SideNav() {
       <CreatePostTab/>
 
       <div className={classes.section}>
-        <Group className={classes.collectionsHeader} justify="space-between">
-          <Text size="xs" fw={500} c="dimmed">
-            Search by Tags
-          </Text>
-          <Tooltip label="Create collection" withArrow position="right">
-            <ActionIcon variant="default" size={18}>
-              <HiPlus size={12} stroke={"1.5"} />
-            </ActionIcon>
-          </Tooltip>
-        </Group>
+          <a href = "/dashboard/mypost" className={classes.mainLink} >
+              <UnstyledButton key="createPostTab" className={classes.mainLink}>
+                  <a className={classes.link} key={'addTodo'}>
+                      <HiUser className={classes.linkIcon} />
+                      <span style={{padding:'10px'}}>My Post</span>
+                  </a>
+              </UnstyledButton>
+          </a>
         <div className={classes.collections}>{tagsTabs}</div>
       </div>
     </nav>

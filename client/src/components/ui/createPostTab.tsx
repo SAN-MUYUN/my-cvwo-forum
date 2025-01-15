@@ -45,7 +45,7 @@ function CreatePostTab() {
                         
                         <Button 
                             type = 'submit'
-                            style= {{ marginTop: '20px', padding: '10px 20px' }} 
+                            style= {{ marginTop: '20px', padding: '10px 20px'}} 
                             onClick={() => {setOpenModal(false)}
                             }>Post</Button>
                     </form>
@@ -60,7 +60,7 @@ function CreatePostTab() {
                     <UnstyledButton key="createPostTab" className={classes.mainLink}>
                         <a className={classes.link} key={'addTodo'}>
                             <HiOutlinePencil className={classes.linkIcon} />
-                            <span>Create Post</span>
+                            <span style={{padding:'10px'}}>Create Post</span>
                         </a>
                     </UnstyledButton>
                 </div>

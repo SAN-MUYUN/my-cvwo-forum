@@ -234,6 +234,44 @@ func main() {
 		return c.JSON(posts)
 	})
 
+	var myPosts []FullPost
+
+	app.Post("/api/dashboard/mypost", func(c *fiber.Ctx) error {
+		var user string
+		newPosts := []FullPost{}
+		err := c.BodyParser(&user)
+		if err != nil {
+			fmt.Println("cannot parse user: ", err.Error())
+		}
+
+		results, err := db.Query("SELECT * FROM posts WHERE username = ?", user)
+		if err != nil {
+			fmt.Println("error selecting my posts: ", err.Error())
+		}
+		defer results.Close()
+
+		for results.Next() {
+			var post FullPost
+
+			var tags string
+			err := results.Scan(&post.Id, &post.Body, &post.Username, &post.CreatedAt, &post.Title, &tags)
+			if err != nil {
+				fmt.Println("error parsing myPost data: ", err.Error())
+			}
+			post.Tags = strings.Split(tags, ",")
+			newPosts = append(newPosts, post)
+		}
+
+		myPosts = newPosts
+
+		return c.JSON(myPosts)
+
+	})
+
+	app.Get("api/dashboard/mypost", func(c *fiber.Ctx) error {
+		return c.JSON(myPosts)
+	})
+
 	log.Fatal(app.Listen(":8000"))
 
 }

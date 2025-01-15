@@ -20,3 +20,15 @@ export function useFetchPosts() {
 
     return posts; // Return posts for use in components
 }
+
+// export function useFetchMyPost() {
+    
+
+//     const user = sessionStorage.getItem("user")
+
+//     if (user == null) {
+//         return ([])
+//     } else {
+//         return user
+//     }
+// }
