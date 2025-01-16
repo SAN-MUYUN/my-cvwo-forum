@@ -1,13 +1,11 @@
 import { TagsInput, Text } from "@mantine/core"
-import { ENDPOINT, loadMyPost } from "../methods/methods";
-import { Post } from "../../types";
+import { loadMyPost } from "../methods/methods";
 import Layout from "./layout";
 import "./dashboard.css"
 import { FetchPost } from "../../components/FetchPost";
 import { createContext, useState } from "react";
 
 export const TagsContext = createContext<string[] | undefined>([])
-export const MyPostContext = createContext<Post[] | undefined>([])
 
 function Dashboard() {
     const username = sessionStorage.getItem("user");

@@ -1,5 +1,3 @@
-import { createContext, useEffect, useState } from "react";
-import { ENDPOINT } from "../app/methods/methods";
 import { PostCard } from "./ui/PostCard";
 import { Post } from "../types";
 import { useFetchPosts } from "../app/context";

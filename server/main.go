@@ -52,7 +52,7 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:5173/",
 		AllowHeaders: "Origin, Content-Type, Accept, Cache-Control",
-		AllowMethods: "PATCH, POST, GET",
+		AllowMethods: "PATCH, POST, GET, DELETE",
 	}))
 
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
@@ -270,6 +270,32 @@ func main() {
 
 	app.Get("api/dashboard/mypost", func(c *fiber.Ctx) error {
 		return c.JSON(myPosts)
+	})
+
+	app.Delete("api/dashboard/mypost/:id", func(c *fiber.Ctx) error {
+
+		postId, err := c.ParamsInt("id")
+		if err != nil {
+			fmt.Println("can't get postId: ", err.Error())
+		}
+		fmt.Println(postId)
+		var updatedPosts []FullPost
+		for i, post := range myPosts {
+			if post.Id == postId {
+				updatedPosts = append(myPosts[:i], myPosts[i+1:]...)
+				break
+			}
+		}
+		_, err = db.Exec("DELETE FROM posts WHERE id = ?", postId)
+		if err != nil {
+			c.SendString("error deleting post: " + err.Error())
+		}
+		myPosts = updatedPosts
+
+		fmt.Println("Deleted")
+
+		return c.JSON(myPosts)
+
 	})
 
 	log.Fatal(app.Listen(":8000"))

@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { KeyedMutator } from "swr";
 import { Post } from "../../types";
 
 export const ENDPOINT = "http://localhost:8000";
@@ -38,6 +38,7 @@ export async function createPost(post: {title:string, body:string,tags:string[]}
         }
         await updateTags(post.tags);
         await updatePost(newPost)
+        window.location.href = "/dashboard"
 
     }
 
@@ -104,6 +105,23 @@ export async function loadMyPost() {
 
     } catch(error) {
         console.log(error);
-    }
-    
+    }    
 }
+
+
+export async function deleteMyPost(postId: Number, mutate:KeyedMutator<Post[]>) {
+
+        try {
+            const updated = await fetch(`${ENDPOINT}/api/dashboard/mypost/${postId}`, {
+                method: "DELETE",
+               
+            }).then((r) => r.json())
+            mutate(updated)  
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+

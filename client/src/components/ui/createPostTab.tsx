@@ -1,7 +1,7 @@
 import {Button, Modal, TagsInput, Textarea, TextInput, UnstyledButton} from '@mantine/core'
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { HiOutlinePencil, HiOutlinePlus } from 'react-icons/hi';
+import { HiOutlinePencil } from 'react-icons/hi';
 import classes from '../SideNav/SideNav.module.css';
 import { createPost } from '../../app/methods/methods';
 
@@ -40,6 +40,7 @@ function CreatePostTab() {
                             defaultValue={['React']}
                             allowDuplicates = {false}
                             clearable
+                            limit={5}
                             {...form.getInputProps("tags")}
                         />
                         

@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Button, Group, Modal } from '@mantine/core';
+import { Card, Text, Badge, Group, Modal } from '@mantine/core';
 import { Post } from '../../types';
 import { useState } from 'react';
 import { displayTime } from '../../app/methods/methods';
