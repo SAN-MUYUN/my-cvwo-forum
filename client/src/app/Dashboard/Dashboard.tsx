@@ -6,6 +6,7 @@ import { FetchPost } from "../../components/FetchPost";
 import { createContext, useState } from "react";
 
 export const TagsContext = createContext<string[] | undefined>([])
+export const CommentContext = createContext<Comment[] | undefined>([])
 
 function Dashboard() {
     const username = sessionStorage.getItem("user");

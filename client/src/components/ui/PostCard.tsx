@@ -1,15 +1,19 @@
 import { Card, Text, Badge, Group, Modal } from '@mantine/core';
 import { Post } from '../../types';
-import { useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { displayTime } from '../../app/methods/methods';
 import { SlDislike, SlLike } from "react-icons/sl";
+import { CommentSection } from './CommentSection';
 
-export function PostCard({post}:{post: Post}) {
-  console.log(post.tags)
+export const PostContext = createContext<Post | undefined>(undefined)
+
+export function PostCard({post}:{post: Post}, {setCurrPost}:{setCurrPost:any}) {
+  
+
   const [open, setOpen] = useState(false)
   return (
     <>
-    <Modal opened = {open} onClose={() => setOpen(false)}>
+    <Modal opened = {open} onClose={() => setOpen(false)} size="60%">
       <Text fw={500}>{post.title}</Text>
       <Text size="sm" c="dimmed">by {post.username}</Text>
       {post.tags && post.tags.map((tagInfo) => (
@@ -19,6 +23,13 @@ export function PostCard({post}:{post: Post}) {
       <br></br>
 
       <Text>{post.body}</Text>
+      <br></br>
+      <hr></hr>
+      <br></br>
+      <PostContext.Provider value={post}>
+        <CommentSection setOpen={setOpen}/>
+      </PostContext.Provider>
+      
     </Modal>
     <Card shadow="sm" padding="lg" radius="md" withBorder onClick={() => setOpen(true)}>
       

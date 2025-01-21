@@ -6,3 +6,11 @@ export type Post = {
     tags: string[]
     createdAt: Number
 }
+
+export type Comment = {
+    id: Number
+    post: Number
+    user: string
+    body: string
+    createdAt: Number
+}

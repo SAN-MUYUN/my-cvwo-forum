@@ -1,8 +1,9 @@
 import useSWR, { KeyedMutator } from "swr";
-import { Post } from "../../types";
+import { Comment, Post } from "../../types";
+import { notifications } from "@mantine/notifications";
 
 export const ENDPOINT = "http://localhost:8000";
-export const fetcher = (url: string) => fetch(`${ENDPOINT}/${url}`).then((r) => r.json());
+export const fetcher = (url: string) => fetch(`${ENDPOINT}${url}`).then((r) => r.json());
 
 
 
@@ -121,7 +122,54 @@ export async function deleteMyPost(postId: Number, mutate:KeyedMutator<Post[]>) 
         } catch (error) {
             console.log(error)
         }
+}
+
+export async function createComment(comment: {post: Number, content: string}) {
+    
+    const user = sessionStorage.getItem("user")
+    if (user == null) {
+        return false
     }
+
+    const newComment: Comment = {
+        id: 0,
+        post: comment.post,
+        user: user,
+        body: comment.content,
+        createdAt: Date.now()
+    }
+    try {
+        const response = await fetch(`${ENDPOINT}/api/dashboard/comment/${comment.post}`, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(newComment)
+        });
+        console.log("comment uploaded")
+        console.log(response)
+
+
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+export function fetchComments(postId: Number) {
+    try {
+        const response = fetch(`${ENDPOINT}/api/dashboard/comment/${postId}`, {
+            method: "Get"
+        }).then((r) => r.json())
+        .then((data) => data)
+        
+        return response
+
+    } catch(error) {
+        console.log("error: ", error)
+        
+    }
+}
 
 
 

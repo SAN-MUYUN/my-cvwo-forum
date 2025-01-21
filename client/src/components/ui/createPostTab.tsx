@@ -25,14 +25,15 @@ function CreatePostTab() {
         <>
             {/* modal for the create post form itself */}
 
-            <Modal opened = {openModal} onClose={() => {setOpenModal(false)}} title = "Create Post" centered>
+            <Modal opened = {openModal} size = "50%" onClose={() => {setOpenModal(false)}} title = "Create Post" centered>
                     <form onSubmit={form.onSubmit(createPost)}>
                         <TextInput required mb={12} label="title" placeholder='title' {...form.getInputProps("title")}/>
                         <Textarea 
                             required 
                             mb={12} 
                             label="body"
-                            autosize = {true} 
+                            autosize = {true}
+                             
                             placeholder='content...' {...form.getInputProps("body")}/>
                         <TagsInput
                             label="Press Enter to submit a tag"

@@ -4,6 +4,7 @@ import { useFetchPosts } from "../app/context";
 
 export function FetchPost() {
     const posts = useFetchPosts();
+    // const[currPost, setCurrPost] = useState<Post>(undefined)
 
     return (
         <div className="dashboard-content">

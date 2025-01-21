@@ -1,19 +1,13 @@
-import { HiOutlineUser, HiPencil, HiPlus, HiUser, HiZoomIn } from "react-icons/hi";
+import { HiPencil, HiUser, HiZoomIn } from "react-icons/hi";
 
 
 import {
-  ActionIcon,
-  Badge,
-  Box,
-  Code,
-  Group,
+
   Text,
   TextInput,
-  Tooltip,
   UnstyledButton,
 } from '@mantine/core';
 import classes from './SideNav.module.css';
-import { Link, Links } from "react-router-dom";
 import CreatePostTab from "../ui/createPostTab";
 
 const username = sessionStorage.getItem("user")

@@ -45,6 +45,14 @@ type FullPost struct {
 	Tags      []string `json:"tags"`
 }
 
+type Comment struct {
+	Id        int     `json:"id"`
+	Post      int     `json:"post"`
+	User      string  `json:"user"`
+	Body      string  `json:"body"`
+	CreatedAt float64 `json:"createdAt"`
+}
+
 func main() {
 	fmt.Print("Hello World")
 	app := fiber.New()
@@ -296,6 +304,53 @@ func main() {
 
 		return c.JSON(myPosts)
 
+	})
+
+	app.Post("api/dashboard/comment/:id", func(c *fiber.Ctx) error {
+		postId, err := c.ParamsInt("id")
+		if err != nil {
+			fmt.Println("error parsing postId")
+		}
+		var comment Comment
+		err = c.BodyParser(&comment)
+		if err != nil {
+			fmt.Println("error parsing comment: " + err.Error())
+		}
+		query := "INSERT INTO comments (post, user, body, createdAt) VALUES(?,?,?,?)"
+		result, err := db.Exec(query, postId, comment.User, comment.Body, comment.CreatedAt)
+		if err != nil {
+			c.SendString("error inserting comment: " + err.Error())
+		}
+		fmt.Println("comment inserted")
+		return c.JSON(result)
+		// continue from here onwards
+
+	})
+	app.Get("api/dashboard/comment/:id", func(c *fiber.Ctx) error {
+		var comments []Comment
+
+		postId, err := c.ParamsInt("id")
+
+		if err != nil {
+			c.SendString("unable to parse comment id: " + err.Error())
+		}
+		result, err := db.Query("SELECT * FROM comments WHERE post = ?", postId)
+
+		if err != nil {
+			c.SendString("unable to select comments:" + err.Error())
+		}
+
+		for result.Next() {
+			var curr Comment
+			err = result.Scan(&curr.Id, &curr.Post, &curr.User, &curr.Body, &curr.CreatedAt)
+			if err != nil {
+				c.SendString("unable to parse fetched comment: " + err.Error())
+			}
+
+			comments = append(comments, curr)
+		}
+
+		return c.JSON(comments)
 	})
 
 	log.Fatal(app.Listen(":8000"))

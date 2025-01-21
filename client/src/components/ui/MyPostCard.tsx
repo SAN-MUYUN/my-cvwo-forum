@@ -19,7 +19,7 @@ export function MyPostCard({post}: {post:Post}) {
 
       return (
         <>
-        <Modal opened = {open} onClose={() => setOpen(false)}>
+        <Modal opened = {open} onClose={() => setOpen(false)} size="60%">
           <Text fw={500}>{post.title}</Text>
           <HiTrash style={{marginRight:"0px"}} onClick={() => {handleDelete(post.id); setOpen(false)}}/>
 
