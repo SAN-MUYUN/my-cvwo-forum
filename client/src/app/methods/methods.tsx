@@ -1,6 +1,5 @@
 import useSWR, { KeyedMutator } from "swr";
 import { Comment, Post } from "../../types";
-import { notifications } from "@mantine/notifications";
 
 export const ENDPOINT = "http://localhost:8000";
 export const fetcher = (url: string) => fetch(`${ENDPOINT}${url}`).then((r) => r.json());

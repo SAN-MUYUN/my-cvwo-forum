@@ -1,4 +1,4 @@
-import { HiPencil, HiUser, HiZoomIn } from "react-icons/hi";
+import { HiUser, HiZoomIn } from "react-icons/hi";
 
 
 import {
@@ -12,29 +12,29 @@ import CreatePostTab from "../ui/createPostTab";
 
 const username = sessionStorage.getItem("user")
 
-const links = [
-  { icon: HiPencil, label: 'Create Post', href: "/dashboard/createPost"}
-];
+// const links = [
+//   { icon: HiPencil, label: 'Create Post', href: "/dashboard/createPost"}
+// ];
 
 const tags: {label:string}[] = [];
 
 export function SideNav() {
   
-  const mainLinks = links.map((link) => (
-    <UnstyledButton key={link.label} className={classes.mainLink}>
-      <a href="create"className={classes.mainLinkInner}>
-        <link.icon size={20} className={classes.mainLinkIcon} stroke="1.5" />
+  // const mainLinks = links.map((link) => (
+  //   <UnstyledButton key={link.label} className={classes.mainLink}>
+  //     <a href="create"className={classes.mainLinkInner}>
+  //       <link.icon size={20} className={classes.mainLinkIcon} stroke="1.5" />
 
-        <span>{link.label}</span>
+  //       <span>{link.label}</span>
 
-      </a>
-      {/* {link.notifications && (               //notification component
-        <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
-          {link.notifications}
-        </Badge>
-      )} */}
-    </UnstyledButton>
-  ));
+  //     </a>
+  //     {/* {link.notifications && (               //notification component
+  //       <Badge size="sm" variant="filled" className={classes.mainLinkBadge}>
+  //         {link.notifications}
+  //       </Badge>
+  //     )} */}
+  //   </UnstyledButton>
+  // ));
 
   const tagsTabs = tags.map((collection) => (
     <a

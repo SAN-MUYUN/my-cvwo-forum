@@ -1,13 +1,13 @@
 import { Card, Text, Badge, Group, Modal } from '@mantine/core';
 import { Post } from '../../types';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { displayTime } from '../../app/methods/methods';
 import { SlDislike, SlLike } from "react-icons/sl";
 import { CommentSection } from './CommentSection';
 
 export const PostContext = createContext<Post | undefined>(undefined)
 
-export function PostCard({post}:{post: Post}, {setCurrPost}:{setCurrPost:any}) {
+export function PostCard({post}:{post: Post}) {
   
 
   const [open, setOpen] = useState(false)
@@ -27,7 +27,7 @@ export function PostCard({post}:{post: Post}, {setCurrPost}:{setCurrPost:any}) {
       <hr></hr>
       <br></br>
       <PostContext.Provider value={post}>
-        <CommentSection setOpen={setOpen}/>
+        <CommentSection/>
       </PostContext.Provider>
       
     </Modal>

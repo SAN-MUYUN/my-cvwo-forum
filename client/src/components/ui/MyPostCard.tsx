@@ -10,7 +10,8 @@ export function MyPostCard({post}: {post:Post}) {
     const [open, setOpen] = useState(false);
     const { data, mutate } = useSWR('api/dashboard/mypost/', fetcher);
     const [changed, setChanged] = useState(true)
-
+    console.log(changed);
+    console.log(data);
     const handleDelete = (postId: Number) => {
         setChanged(false)
         deleteMyPost(postId, mutate).then(() => setChanged(true));

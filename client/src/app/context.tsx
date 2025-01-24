@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ENDPOINT } from "./methods/methods";
 import { TagsContext } from "./Dashboard/Dashboard";
-import { PostCard, PostContext } from "../components/ui/PostCard";
-import { Post } from "../types";
+import { PostContext } from "../components/ui/PostCard";
 
 
 export function useFetchPosts() {
