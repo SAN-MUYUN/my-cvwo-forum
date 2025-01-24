@@ -3,12 +3,10 @@ import {
     Container,
     Paper,
     PasswordInput,
-    Text,
     TextInput,
     Title,
   } from '@mantine/core';
 import classes from "../../app/Welcome/AuthenticationTitle.module.css"
-import { Link } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 import { signUp } from '../../app/methods/methods';
 
