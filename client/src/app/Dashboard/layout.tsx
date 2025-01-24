@@ -1,5 +1,5 @@
 import {SideNav} from "../../components/SideNav/SideNav";
-import "./dashboard.css"
+import "./Dashboard.css"
  
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
