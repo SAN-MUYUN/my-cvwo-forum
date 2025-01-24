@@ -56,11 +56,17 @@ type Comment struct {
 func main() {
 	fmt.Print("Hello World")
 	app := fiber.New()
+	app.Static("/", "/static")
+
+	app.Use(func(c *fiber.Ctx) error {
+		return c.SendFile("/static/index.html")
+	})
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173/",
-		AllowHeaders: "Origin, Content-Type, Accept, Cache-Control",
-		AllowMethods: "PATCH, POST, GET, DELETE",
+		AllowOrigins:     "*",
+		AllowHeaders:     "Origin, Content-Type, Accept, Cache-Control",
+		AllowMethods:     "PATCH, POST, GET, DELETE",
+		AllowCredentials: true,
 	}))
 
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
