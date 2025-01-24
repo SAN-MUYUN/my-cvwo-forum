@@ -1,10 +1,9 @@
-
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Welcomepage from './Welcome/welcomepage'
-import Dashboard from './Dashboard/dashboard'
 import SignUpPage from './SignUp/SignUp'
 import { MyPostPage } from './Dashboard/MyPost/MyPostPage'
+import Dashboard from './Dashboard/Dashboard'
 
 function App() {
   const links = [

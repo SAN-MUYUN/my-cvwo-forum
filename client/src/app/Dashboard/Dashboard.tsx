@@ -1,7 +1,7 @@
 import { TagsInput, Text } from "@mantine/core"
 import { loadMyPost } from "../methods/methods";
 import Layout from "./layout";
-import "./dashboard.css"
+import "./Dashboard.css"
 import { FetchPost } from "../../components/FetchPost";
 import { createContext, useState } from "react";
 
