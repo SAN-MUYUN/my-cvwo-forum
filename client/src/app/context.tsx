@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ENDPOINT } from "./methods/methods";
-import { TagsContext } from "./Dashboard/Dashboard";
+import { TagsContext } from "./Dashboard/dashboard";
 import { PostContext } from "../components/ui/PostCard";
 
 

@@ -2,7 +2,7 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Welcomepage from './Welcome/welcomepage'
-import Dashboard from './Dashboard/Dashboard'
+import Dashboard from './Dashboard/dashboard'
 import SignUpPage from './SignUp/SignUp'
 import { MyPostPage } from './Dashboard/MyPost/MyPostPage'
 
