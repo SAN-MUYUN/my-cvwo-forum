@@ -28,14 +28,15 @@ func main() {
 	dbName := os.Getenv("DB_NAME")
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
-	// app.Static("/", "/static")
+
+	// app.Static("/", "./static")
 
 	// app.Use(func(c *fiber.Ctx) error {
-	// 	return c.SendFile("/static/index.html")
+	// 	return c.SendFile("./static/index.html")
 	// })
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173",
+		AllowOrigins: "*",
 		AllowHeaders: "Origin, Content-Type, Accept, Cache-Control",
 		AllowMethods: "PATCH, POST, GET, DELETE",
 		// AllowCredentials: true,
