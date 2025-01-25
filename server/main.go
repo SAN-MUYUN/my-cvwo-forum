@@ -4,86 +4,60 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/joho/godotenv"
 )
-
-type Tag struct {
-	Id   int    `json:"id"`
-	Body string `json:"body"`
-}
-
-type User struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
-type Post struct {
-	Username  string  `json:"username"`
-	Title     string  `json:"title"`
-	Body      string  `json:"body"`
-	CreatedAt float64 `json:"createdAt"`
-}
-
-type PostWithTags struct {
-	Username  string   `json:"username"`
-	Title     string   `json:"title"`
-	Body      string   `json:"body"`
-	CreatedAt float64  `json:"createdAt"`
-	Tags      []string `json:"tags"`
-}
-
-type FullPost struct {
-	Id        int      `json:"id"`
-	Username  string   `json:"username"`
-	Title     string   `json:"title"`
-	Body      string   `json:"body"`
-	CreatedAt float64  `json:"createdAt"`
-	Tags      []string `json:"tags"`
-}
-
-type Comment struct {
-	Id        int     `json:"id"`
-	Post      int     `json:"post"`
-	User      string  `json:"user"`
-	Body      string  `json:"body"`
-	CreatedAt float64 `json:"createdAt"`
-}
 
 func main() {
 	fmt.Print("Hello World")
 	app := fiber.New()
-	app.Static("/", "/static")
 
-	app.Use(func(c *fiber.Ctx) error {
-		return c.SendFile("/static/index.html")
-	})
+	err := godotenv.Load() // Make sure this line is uncommented and correctly loading the .env file
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
+
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
+	// app.Static("/", "/static")
+
+	// app.Use(func(c *fiber.Ctx) error {
+	// 	return c.SendFile("/static/index.html")
+	// })
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "*",
-		AllowHeaders:     "Origin, Content-Type, Accept, Cache-Control",
-		AllowMethods:     "PATCH, POST, GET, DELETE",
-		AllowCredentials: true,
+		AllowOrigins: "http://localhost:5173",
+		AllowHeaders: "Origin, Content-Type, Accept, Cache-Control",
+		AllowMethods: "PATCH, POST, GET, DELETE",
+		// AllowCredentials: true,
 	}))
 
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
 		return c.SendString("OK")
 	})
 
-	db, err := sql.Open("mysql", "root:NYJCnyjc@2020@tcp(127.0.0.1:3306)/cvwo")
+	// db, err := sql.Open("mysql", "root:NYJCnyjc@2020@tcp(127.0.0.1:3306)/cvwo")
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
 	fmt.Println("connected to database")
 
+	// handles login logic. Return error if failed to insert data into database.
 	app.Post("/api/login", func(c *fiber.Ctx) error {
 		user := &User{}
 		if err := c.BodyParser(user); err != nil {
-			fmt.Println(err.Error())
+			return badRequestError(c, "cannot parse info")
 		}
 		query := "SELECT password FROM users WHERE username = ?"
 		result := db.QueryRow(query, user.Username) //making query to fetch the user password from database
@@ -109,18 +83,21 @@ func main() {
 		}
 	})
 
+	// handles sign up logic.
+	// return error if failed to insert information into database.
 	app.Post("/api/signUp", func(c *fiber.Ctx) error {
 		user := &User{}
 		err := c.BodyParser(user)
 		if err != nil {
-			fmt.Println("cannot parse data")
+			return badRequestError(c, "cannot parse user info")
 		}
 		query := "INSERT INTO users (username, password) VALUES (?, ?)"
-		result, err := db.Query(query, user.Username, user.Password)
+		result, err := db.Exec(query, user.Username, user.Password)
 		if err != nil {
 			fmt.Println("failed to insert data")
+			return badRequestError(c, "failed to insert data")
 		}
-		defer result.Close()
+
 		fmt.Println("new user data inserted")
 		return c.JSON(result)
 	})
@@ -131,7 +108,6 @@ func main() {
 			return c.Status(fiber.StatusBadRequest).SendString("Error parsing post: " + err.Error())
 		}
 
-		// Map to track existing tags for quick lookup
 		existingTags := make(map[string]bool)
 		rows, err := db.Query("SELECT body FROM tags")
 		if err != nil {
@@ -218,14 +194,7 @@ func main() {
 			// Execute the query with `tags` as variadic arguments
 			results, err = db.Query(query, args...)
 		}
-		// else {
-		// 	placeholders := strings.Join(strings.Split(strings.Repeat("?", len(*tags)), ""), ",")
-		// 	query = fmt.Sprintf("SELECT DISTINCT posts.* FROM posts JOIN posttag ON posts.id = posttag.post_id WHERE posttag.tag_body IN ()")
-		// }
-		// queryArgs := []string{}
-		// for i, v := range *tags {
-		// 	queryArgs[i] = v
-		// }
+
 		if err != nil {
 			fmt.Println("error executing query: ", err.Error())
 			return c.Status(fiber.StatusInternalServerError).SendString("Error executing query.")

@@ -2,6 +2,7 @@ import { Card, Group, Text } from "@mantine/core";
 import { Comment } from "../../types";
 import { SlDislike, SlLike } from "react-icons/sl";
 import { displayTime } from "../../app/methods/methods";
+import { sendNotification } from "./notification";
 
 export function CommentCard({comment}: {comment:Comment}) {
     console.log(comment)
@@ -24,9 +25,9 @@ export function CommentCard({comment}: {comment:Comment}) {
             </Group>
     
             <div style={{textAlign:'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-            <SlLike/>
+            <SlLike onClick={() => sendNotification("Oops", "Like function to be implemented soon", "blue")}/>
             <Text style={{marginLeft: '8px'}}>0</Text>
-            <SlDislike style={{marginLeft: '10px'}}/>
+            <SlDislike style={{marginLeft: '10px'}} onClick={() => sendNotification("Oops", "Dislike function to be implemented soon", "blue")}/>
             <Text style={{marginLeft: '8px'}}>0</Text>
             </div>
     

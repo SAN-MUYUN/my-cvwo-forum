@@ -2,6 +2,7 @@ import { Button, Paper, PasswordInput, TextInput, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { ENDPOINT } from "../../app/methods/methods";
 import { useState } from "react";
+import { sendNotification } from "./notification";
 
 function LoginForm() {
 
@@ -10,7 +11,7 @@ function LoginForm() {
     async function login(user: {username: string, password: string}) {
 
         try {
-            const response = await fetch(`${ENDPOINT}/api/login/`, 
+            const response = await fetch(`${ENDPOINT}/api/login`, 
                 { 
                     method: "POST",
                     headers: {"Content-type": "application/json"},
@@ -19,17 +20,15 @@ function LoginForm() {
             );
              // Ensuring the JSON parsing is awaited
             if (response.ok) {
-                console.log("Login successful");
                 sessionStorage.setItem("user", user.username);
                 setIsValid(true);
                 window.location.href = "/dashboard";
             } else {
-                console.log("Login failed: Invalid credentials");
                 setIsValid(false);
             }
             
         } catch (error) {
-            console.error('Error fetching data:', error);
+            sendNotification("Error", "error connecting to server", "red")
         }
     
     }

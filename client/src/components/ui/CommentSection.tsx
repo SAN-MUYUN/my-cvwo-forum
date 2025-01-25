@@ -14,7 +14,7 @@ export function CommentSection() {
     const [hideInput, setHideInput] = useState(true);
     const [commentUpdate, setCommentUpdate] = useState(0)
     var comments = useCommentContext(commentUpdate);
-    comments = comments.sort((a:Comment, b:Comment) => {
+    comments = comments?.sort((a:Comment, b:Comment) => {
         return b.createdAt.valueOf() - a.createdAt.valueOf()
       });
 

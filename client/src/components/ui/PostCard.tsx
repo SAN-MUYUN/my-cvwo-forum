@@ -4,6 +4,7 @@ import { createContext, useState } from 'react';
 import { displayTime } from '../../app/methods/methods';
 import { SlDislike, SlLike } from "react-icons/sl";
 import { CommentSection } from './CommentSection';
+import { sendNotification } from './notification';
 
 export const PostContext = createContext<Post | undefined>(undefined)
 
@@ -26,6 +27,12 @@ export function PostCard({post}:{post: Post}) {
       <br></br>
       <hr></hr>
       <br></br>
+      <div style={{textAlign:'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <SlLike onClick={() => sendNotification("Oops", "Like function to be implemented soon", "blue")}/>
+        <Text style={{marginLeft: '8px'}}>0</Text>
+        <SlDislike style={{marginLeft: '10px'}} onClick={() => sendNotification("Oops", "Dislike function to be implemented soon", "blue")}/>
+        <Text style={{marginLeft: '8px'}}>0</Text>
+      </div>
       <PostContext.Provider value={post}>
         <CommentSection/>
       </PostContext.Provider>
@@ -58,9 +65,9 @@ export function PostCard({post}:{post: Post}) {
       </Group>
 
       <div style={{textAlign:'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <SlLike/>
+        <SlLike onClick={() => sendNotification("Oops", "Like function to be implemented soon", "blue")}/>
         <Text style={{marginLeft: '8px'}}>0</Text>
-        <SlDislike style={{marginLeft: '10px'}}/>
+        <SlDislike style={{marginLeft: '10px'}} onClick={() => sendNotification("Oops", "Dislike function to be implemented soon", "blue")}/>
         <Text style={{marginLeft: '8px'}}>0</Text>
       </div>
 

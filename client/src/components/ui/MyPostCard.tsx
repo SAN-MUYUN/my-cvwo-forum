@@ -5,6 +5,7 @@ import { deleteMyPost, displayTime, fetcher } from "../../app/methods/methods";
 import { SlDislike, SlLike } from "react-icons/sl";
 import { HiTrash } from "react-icons/hi";
 import useSWR from "swr";
+import { notifications } from "@mantine/notifications";
 
 export function MyPostCard({post}: {post:Post}) {
     const [open, setOpen] = useState(false);
@@ -12,9 +13,12 @@ export function MyPostCard({post}: {post:Post}) {
     const [changed, setChanged] = useState(true)
     console.log(changed);
     console.log(data);
+
+
     const handleDelete = (postId: Number) => {
         setChanged(false)
         deleteMyPost(postId, mutate).then(() => setChanged(true));
+        notifications.show({title: "Deleted", message: "Post successfully deleted", color: "green"})
         window.location.href = "/dashboard"
     };
 

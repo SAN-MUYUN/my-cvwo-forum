@@ -10,10 +10,9 @@ export const CommentContext = createContext<Comment[] | undefined>([])
 
 function Dashboard() {
     const username = sessionStorage.getItem("user");
-    console.log(username)
     
     const[tags, setTags] = useState<string[]>([]);
-    // const[posts, setPosts] = useState<Post[]>([]);
+
     loadMyPost();
 
     if(username == null) {
