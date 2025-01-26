@@ -359,6 +359,6 @@ func main() {
 		return c.JSON(comments)
 	})
 
-	log.Fatal(app.Listen(":8000"))
+	log.Fatal(app.Listen(port))
 
 }
