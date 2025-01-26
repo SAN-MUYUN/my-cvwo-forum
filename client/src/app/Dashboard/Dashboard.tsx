@@ -1,4 +1,4 @@
-import { Center, TagsInput, Text } from "@mantine/core"
+import { TagsInput, Text } from "@mantine/core"
 import { loadMyPost } from "../methods/methods";
 import Layout from "./layout";
 import "./Dashboard.css"

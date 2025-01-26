@@ -1,15 +1,11 @@
-import { Button, Card, Group, Text } from "@mantine/core";
+import { Card, Group, Text } from "@mantine/core";
 import { Comment } from "../../../types";
 import { SlDislike, SlLike } from "react-icons/sl";
 import { displayTime } from "../../../app/methods/methods";
 import { sendNotification } from "../notification";
 
 export function CommentCard({comment}: {comment:Comment}) {
-
-    const userData = sessionStorage.getItem("user");
-    const user = userData ? JSON.parse(userData) : null;
-    const isCurrentUser = user && user === comment.user;
-    
+      
     console.log(comment)
 
     return (
