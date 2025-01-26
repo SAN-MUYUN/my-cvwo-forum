@@ -1,7 +1,12 @@
 .dashboard-content {
     margin-left: 300px;
-  }
-  
-  .sidenavMain {
-    flex: 1;
-  }
+}
+
+.sidenavMain {
+  flex: 1;
+}
+
+.dashboard-header {
+  text-align: center;
+}
+

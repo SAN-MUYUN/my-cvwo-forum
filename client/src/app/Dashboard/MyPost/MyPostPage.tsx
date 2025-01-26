@@ -1,5 +1,5 @@
 import Layout from "../layout";
-import { FetchMyPost } from "../../../components/ui/FetchMyPost";
+import { FetchMyPost } from "../../../components/ui/mypost/FetchMyPost";
 import { ENDPOINT } from "../../methods/methods";
 import {Text} from "@mantine/core"
 
@@ -18,7 +18,7 @@ export function MyPostPage() {
         
         <Layout>
             <a href = '/dashboard' style={{marginLeft:0}}>
-                Back
+                See All Posts
             </a>
             <FetchMyPost/>
         </Layout>

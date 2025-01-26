@@ -6,7 +6,10 @@ import { useFetchPosts } from "../app/context";
 export function FetchPost() {
 
     // fetch post from the database
-    const posts = useFetchPosts();
+    var posts = useFetchPosts();
+    posts = posts?.sort((a:Post, b:Post) => {
+            return b.createdAt.valueOf() - a.createdAt.valueOf()
+          });
 
     return (
         <div className="dashboard-content">

@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { Post } from "../../types";
-import { fetcher } from "../../app/Dashboard/MyPost/MyPostPage";
+import { Post } from "../../../types";
+import { fetcher } from "../../../app/Dashboard/MyPost/MyPostPage";
 import { MyPostCard } from "./MyPostCard";
 
 export function FetchMyPost() {

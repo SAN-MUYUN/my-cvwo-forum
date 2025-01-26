@@ -1,4 +1,4 @@
-import { TagsInput, Text } from "@mantine/core"
+import { Center, TagsInput, Text } from "@mantine/core"
 import { loadMyPost } from "../methods/methods";
 import Layout from "./layout";
 import "./Dashboard.css"
@@ -22,6 +22,8 @@ function Dashboard() {
     } else {
         return (
             <Layout>
+                <Text className="dashboard-header"> MY-CVWO-Forum </Text>
+                <hr></hr>
                 <TagsInput
                     label="Press Enter to filter by the input tags"
                     placeholder="Enter tag to filter posts"

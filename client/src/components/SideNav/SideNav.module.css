@@ -44,6 +44,7 @@
   border-radius: var(--mantine-radius-sm);
   font-weight: 500;
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  justify-content: center;
 
   &:hover {
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
@@ -95,4 +96,8 @@
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
     color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
   }
+}
+
+.logoutText {
+  color:red
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Post } from "../../types";
+import { Post } from "../../../types";
 import { Badge, Card, Group, Modal, Text } from "@mantine/core";
-import { deleteMyPost, displayTime, fetcher } from "../../app/methods/methods";
+import { deleteMyPost, displayTime, fetcher } from "../../../app/methods/methods";
 import { SlDislike, SlLike } from "react-icons/sl";
 import { HiTrash } from "react-icons/hi";
 import useSWR from "swr";
@@ -24,6 +24,7 @@ export function MyPostCard({post}: {post:Post}) {
 
       return (
         <>
+      
         <Modal opened = {open} onClose={() => setOpen(false)} size="60%">
           <Text fw={500}>{post.title}</Text>
           <HiTrash style={{marginRight:"0px"}} onClick={() => {handleDelete(post.id); setOpen(false)}}/>
@@ -35,11 +36,13 @@ export function MyPostCard({post}: {post:Post}) {
             ))}
           <br></br>
           <br></br>
-    
           <Text>{post.body}</Text>
         </Modal>
+
+
         <Card shadow="sm" padding="lg" radius="md" withBorder onClick={() => setOpen(true)}>
           
+          {/* display title and tag information */}
           <Group justify="space-between" mt="md" mb="xs">
             <Text fw={500} left={0}>{post.title}</Text>
             <Group ta={'right'}>
@@ -48,9 +51,9 @@ export function MyPostCard({post}: {post:Post}) {
                   <Badge color='yellow' ta={'left'}>{tagInfo}</Badge>
               ))}
             </Group>
-    
-            
           </Group>
+
+          {/* display post text body and time */}
           <Group>
             <div style={{textAlign: 'left'}}>
               <Text size="sm" lineClamp={2} >
@@ -65,6 +68,7 @@ export function MyPostCard({post}: {post:Post}) {
             </div>
           </Group>
     
+          {/* buttons for like and dislike */}
           <div style={{textAlign:'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <SlLike/>
             <Text style={{marginLeft: '8px'}}>0</Text>

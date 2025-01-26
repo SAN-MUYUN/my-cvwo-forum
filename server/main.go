@@ -42,7 +42,6 @@ func main() {
 	uiPaths := []string{
 		"/",
 		"/dashboard",
-		"/login",
 		"/signUp",
 		"/dashboard/mypost",
 	}
@@ -55,16 +54,6 @@ func main() {
 	for _, path := range uiPaths {
 		app.Get(path, serveUI)
 	}
-
-	// app.Use("/", filesystem.New(filesystem.Config{
-	// 	Root:   http.FS(index),
-	// 	Index:  "index.html",
-	// 	Browse: false,
-	// }))
-
-	// serveUI := func(ctx *fiber.Ctx) error {
-	// 	return filesystem.SendFile(ctx, http.FS(index), "index.html")
-	// }
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
@@ -134,6 +123,7 @@ func main() {
 		return c.JSON(result)
 	})
 
+	// Inserts new tags into the tags table. Does not insert duplicated tags
 	app.Patch("/api/dashboard/tags", func(c *fiber.Ctx) error {
 		var newTags []string
 		if err := c.BodyParser(&newTags); err != nil {
@@ -168,6 +158,7 @@ func main() {
 		return c.SendString("Tags updated successfully")
 	})
 
+	// Inserts new post into the post table, inserts the tags created into the posttag table.
 	app.Post("/api/dashboard/posts", func(c *fiber.Ctx) error {
 		var post PostWithTags
 		if err := c.BodyParser(&post); err != nil {
@@ -198,6 +189,7 @@ func main() {
 
 	})
 
+	// Select all post from the posts table and their corresponding tags from posttag table in database.
 	app.Post("/api/dashboard/get", func(c *fiber.Ctx) error {
 		fmt.Println(string(c.Body()))
 		tags := []string{}
@@ -251,6 +243,7 @@ func main() {
 
 	var myPosts []FullPost
 
+	// Fetches all posts from posts table in database which are created by current user
 	app.Post("/api/dashboard/mypost", func(c *fiber.Ctx) error {
 		var user string
 		newPosts := []FullPost{}
@@ -283,10 +276,12 @@ func main() {
 
 	})
 
+	// Gets all the posts created by the current user
 	app.Get("api/dashboard/mypost", func(c *fiber.Ctx) error {
 		return c.JSON(myPosts)
 	})
 
+	// delete posts with postId as 'id'
 	app.Delete("api/dashboard/mypost/:id", func(c *fiber.Ctx) error {
 
 		postId, err := c.ParamsInt("id")
@@ -313,6 +308,7 @@ func main() {
 
 	})
 
+	// Creates a new comment under the post which has 'id' as id column in posts table
 	app.Post("api/dashboard/comment/:id", func(c *fiber.Ctx) error {
 		postId, err := c.ParamsInt("id")
 		if err != nil {
@@ -333,6 +329,8 @@ func main() {
 		// continue from here onwards
 
 	})
+
+	// Gets all comments under the post which has 'id' as the value for id column in posts table
 	app.Get("api/dashboard/comment/:id", func(c *fiber.Ctx) error {
 		var comments []Comment
 

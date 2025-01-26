@@ -1,9 +1,9 @@
 import { Button, Text, Textarea } from "@mantine/core"
 import { useForm } from "@mantine/form";
 import { useState } from "react";
-import { createComment } from "../../app/methods/methods";
-import { useCommentContext, useSinglepostContext } from "../../app/context";
-import { Comment } from "../../types";
+import { createComment } from "../../../app/methods/methods";
+import { useCommentContext, useSinglepostContext } from "../../../app/context";
+import { Comment } from "../../../types";
 import { CommentCard } from "./CommentCard";
 import { notifications } from "@mantine/notifications";
 import '@mantine/notifications/styles.css';
@@ -44,14 +44,13 @@ export function CommentSection() {
     return(
         
         <>
-        {/*createComment method to be implemented later */}
             <Button onClick={()=>setHideInput(!hideInput)}>Create Comment</Button>
             <br></br>
             <form hidden={hideInput} onSubmit={form.onSubmit(handleSubmit)}> 
                 <Textarea 
                     hidden = {hideInput} 
                     autosize 
-                    label = "Input new comment" 
+                    label = "Input new comment (Note that after sending the comment, it cannot be deleted or changed. Update coming soon)" 
                     required
 
                     {...form.getInputProps("content")}/>

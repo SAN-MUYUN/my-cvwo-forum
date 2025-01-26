@@ -3,7 +3,7 @@ import { Post } from '../../types';
 import { createContext, useState } from 'react';
 import { displayTime } from '../../app/methods/methods';
 import { SlDislike, SlLike } from "react-icons/sl";
-import { CommentSection } from './CommentSection';
+import { CommentSection } from './comment/CommentSection';
 import { sendNotification } from './notification';
 
 export const PostContext = createContext<Post | undefined>(undefined)

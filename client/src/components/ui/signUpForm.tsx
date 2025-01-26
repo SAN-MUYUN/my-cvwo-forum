@@ -61,7 +61,7 @@ function SignUpForm() {
         
             <Paper withBorder shadow="md" p={30} mt={30} radius="md">
                 <Text c={"red"} hidden={isValid}> username is taken, try another one </Text>
-                <TextInput label="Username" placeholder="xyz" required {...form.getInputProps("username")}/>
+                <TextInput label="Username" placeholder="xyz" required maxLength={45} {...form.getInputProps("username")}/>
                 <PasswordInput label="Password" placeholder="Your password" required mt="md" {...form.getInputProps("password")}/>
 
                 <Button fullWidth mt="xl" type = 'submit'>
