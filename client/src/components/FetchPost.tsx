@@ -2,9 +2,11 @@ import { PostCard } from "./ui/PostCard";
 import { Post } from "../types";
 import { useFetchPosts } from "../app/context";
 
+// fetch post from database and disply using PostCard component
 export function FetchPost() {
+
+    // fetch post from the database
     const posts = useFetchPosts();
-    // const[currPost, setCurrPost] = useState<Post>(undefined)
 
     return (
         <div className="dashboard-content">

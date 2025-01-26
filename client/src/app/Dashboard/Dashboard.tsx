@@ -23,7 +23,7 @@ function Dashboard() {
         return (
             <Layout>
                 <TagsInput
-                    label="Press Enter to submit a tag"
+                    label="Press Enter to filter by the input tags"
                     placeholder="Enter tag to filter posts"
                     allowDuplicates = {false}
                     clearable
