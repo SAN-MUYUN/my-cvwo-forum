@@ -19,7 +19,7 @@ func main() {
 
 	err := godotenv.Load() // Make sure this line is uncommented and correctly loading the .env file
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Println("Error loading .env file, looking for production envrionment variables")
 	}
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
