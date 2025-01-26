@@ -31,9 +31,34 @@ func main() {
 
 	app.Static("/", "./static")
 
-	// app.Use(func(c *fiber.Ctx) error {
-	// 	return c.SendFile("./static/index.html")
-	// })
+	// // app.Use(func(c *fiber.Ctx) error {
+	// // 	return c.SendFile("./static/index.html")
+	// // })
+	uiPaths := []string{
+		"/",
+		"/dashboard",
+		"/login",
+		"/signUp",
+	}
+
+	serveUI := func(c *fiber.Ctx) error {
+		return c.SendFile("./static/index.html")
+	}
+
+	// Register the UI paths to use the serveUI handler
+	for _, path := range uiPaths {
+		app.Get(path, serveUI)
+	}
+
+	// app.Use("/", filesystem.New(filesystem.Config{
+	// 	Root:   http.FS(index),
+	// 	Index:  "index.html",
+	// 	Browse: false,
+	// }))
+
+	// serveUI := func(ctx *fiber.Ctx) error {
+	// 	return filesystem.SendFile(ctx, http.FS(index), "index.html")
+	// }
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
