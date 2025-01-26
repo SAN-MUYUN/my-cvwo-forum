@@ -44,7 +44,7 @@ func main() {
 		"/dashboard",
 		"/login",
 		"/signUp",
-		"/mypost",
+		"/dashboard/mypost",
 	}
 
 	serveUI := func(c *fiber.Ctx) error {
