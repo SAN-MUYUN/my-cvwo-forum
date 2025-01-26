@@ -2,7 +2,7 @@ import useSWR, { KeyedMutator } from "swr";
 import { Comment, Post } from "../../types";
 
 // export const ENDPOINT = "";
-export const ENDPOINT = import.meta.env.PORT || "http://localhost:8000"
+export const ENDPOINT = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
 export const fetcher = (url: string) => fetch(`${ENDPOINT}${url}`).then((r) => r.json());
 
 
